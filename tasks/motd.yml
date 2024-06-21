@@ -1,14 +1,16 @@
 ---
-- name: Update apt cache.
+
+- name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
   ansible.builtin.apt:
     update_cache: yes
-  changed_when: False
+    cache_valid_time: 3600
 
-- name: Ensure packages areinstalled.
+- name: Ensure packages are installed.
   ansible.builtin.apt:
-    name: "{{ motd_packages }}"
-    state: present
-
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ motd_packages }}"
+ 
 
 - name: Write MOTD config file
   template:
@@ -29,4 +31,11 @@
     path: /etc/update-motd.d/10-uname
     regexp: '^uname '
     line: uname -snrvm
+  when: motd_addunameline  
 
+- name: Remove file (delete file)
+  ansible.builtin.file:
+    path: /etc/update-motd.d/10-uname
+    state: absent
+  when: not motd_addunameline  
+    

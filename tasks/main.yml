@@ -2,4 +2,4 @@
 
 - name: Setup MOTD
   import_tasks: motd.yml
-  tags: motd
+  tags: sys_motd

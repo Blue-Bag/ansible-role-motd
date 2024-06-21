@@ -5,3 +5,5 @@
 motd_packages: 
   - {name: 'screenfetch', state: 'present'}
   - {name: 'inxi', state: 'present'}
+
+motd_addunameline: false
