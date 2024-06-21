@@ -1,0 +1,32 @@
+---
+- name: Update apt cache.
+  ansible.builtin.apt:
+    update_cache: yes
+  changed_when: False
+
+- name: Ensure packages areinstalled.
+  ansible.builtin.apt:
+    name: "{{ motd_packages }}"
+    state: present
+
+
+- name: Write MOTD config file
+  template:
+    src: 01-motd.j2
+    dest: "/etc/update-motd.d/01-custom"
+    owner: "root"
+    group: "root"
+    mode: 0750
+  become: true
+
+- name: Remove file old MOTD
+  ansible.builtin.file:
+    path: /etc/motd
+    state: absent
+
+- name: Add uname details to motd
+  ansible.builtin.lineinfile:
+    path: /etc/update-motd.d/10-uname
+    regexp: '^uname '
+    line: uname -snrvm
+

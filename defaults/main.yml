@@ -1,0 +1,7 @@
+---
+# defaults file for motd
+
+
+motd_packages: 
+  - {name: 'screenfetch', state: 'present'}
+  - {name: 'inxi', state: 'present'}

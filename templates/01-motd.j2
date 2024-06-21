@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "{{ inventory_hostname_short }}  is Ansible built - to reconfigure use the playbook"
+echo "GENERAL SYSTEM INFORMATION"
+/usr/bin/screenfetch
+echo
+echo "SYSTEM DISK USAGE"
+export TERM=xterm; inxi -D
+echo

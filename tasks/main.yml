@@ -1,0 +1,4 @@
+---
+
+- name: Setup MOTD
+  import_tasks: motd.yml
